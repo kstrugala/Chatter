@@ -1,18 +1,13 @@
 using Autofac;
+using Chatter.Infrastructure.EF;
 using Chatter.Infrastructure.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Chatter.Api
 {
@@ -34,6 +29,13 @@ namespace Chatter.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Chatter.Api", Version = "v1" });
             });
+
+            if(Configuration["DbProvider"].ToLower() == "sql")
+            {
+                services.AddDbContext<ChatterContext>(options => {
+                    options.UseSqlServer(Configuration.GetConnectionString("ChatterDb"), m => m.MigrationsAssembly("Chatter.Infrastructure"));
+                });
+            }
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

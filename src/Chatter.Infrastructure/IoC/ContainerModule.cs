@@ -15,6 +15,9 @@ namespace Chatter.Infrastructure.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterModule(new SettingsModule(_configuration));
+
+
+            builder.RegisterModule<ServiceModule>();
         }
     }
 }

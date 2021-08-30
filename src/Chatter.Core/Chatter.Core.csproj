@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.9" />
   </ItemGroup>
 
 </Project>
