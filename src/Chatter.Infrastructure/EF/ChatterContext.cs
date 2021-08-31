@@ -14,7 +14,11 @@ namespace Chatter.Infrastructure.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            var userBuilder = modelBuilder.Entity<User>();
+            userBuilder.HasKey(u => u.Id);
+            userBuilder.Property(u => u.UniqueId)
+                .ValueGeneratedOnAdd();
+            userBuilder.ToTable("Profile", schema: "User");
         }
     }
 }

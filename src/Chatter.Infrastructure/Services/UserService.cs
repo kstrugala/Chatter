@@ -1,6 +1,8 @@
 ﻿using Chatter.Core.Entities;
 using Chatter.Infrastructure.EF;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace Chatter.Infrastructure.Services
@@ -8,14 +10,27 @@ namespace Chatter.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly ChatterContext _context;
+        private readonly IPasswordHasher<User> _passwordHasher;
+
         public UserService(ChatterContext context, IPasswordHasher<User> passwordHasher)
         {
             _context=context;
+            _passwordHasher = passwordHasher;
         }
 
-        public Task SignUp(string email, string password, string firsName, string lastName)
+        public async Task SignUp(string email, string password, string firstName, string lastName)
         {
-            throw new System.NotImplementedException();
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
+
+            if (user != null)
+                throw new Exception($"User with email:{email} already exists.");
+
+            user = new User(email, Role.User);
+            user.SetPassword(password, _passwordHasher);
+            user.SetFirstName(firstName);
+            user.SetLastName(lastName);
+
+            await _context.Users.AddAsync(user);
         }
     }
 }
