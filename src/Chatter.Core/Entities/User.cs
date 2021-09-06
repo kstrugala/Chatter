@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Chatter.Core.Exceptions;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Text.RegularExpressions;
 
@@ -29,12 +30,12 @@ namespace Chatter.Core.Entities
         {
             if (!EmailRegex.IsMatch(email))
             {
-                throw new Exception($"Invalid email: {email}");
+                throw new DomainException(DomainErrorCodes.InvalidEmail, $"Invalid email: {email}");
             }
 
             if (!Entities.Role.IsValid(role))
             {
-                throw new Exception($"Invalid role: {role}");
+                throw new DomainException(DomainErrorCodes.InvalidRole, $"Invalid role: {role}");
             }
 
             Email = email;
@@ -46,7 +47,7 @@ namespace Chatter.Core.Entities
         {
             if (string.IsNullOrWhiteSpace(firstName))
             {
-                throw new Exception("First name cannot be empty.");
+                throw new DomainException(DomainErrorCodes.InvalidFirstName, "First name cannot be empty.");
             }
             FirstName = firstName;
         }
@@ -55,7 +56,7 @@ namespace Chatter.Core.Entities
         {
             if (string.IsNullOrWhiteSpace(lastName))
             {
-                throw new Exception("Last name cannot be emnty.");
+                throw new DomainException(DomainErrorCodes.InvalidLastName, "Last name cannot be emnty.");
             }
             LastName = lastName;
         }
@@ -64,7 +65,7 @@ namespace Chatter.Core.Entities
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new Exception($"Password cannot be empty.");
+                throw new DomainException(DomainErrorCodes.InvalidPassword, $"Password cannot be empty.");
             }
             PasswordHash = passwordHasher.HashPassword(this, password);
         }
