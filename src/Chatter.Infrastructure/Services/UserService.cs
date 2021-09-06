@@ -1,5 +1,7 @@
 ﻿using Chatter.Core.Entities;
+using Chatter.Core.Exceptions;
 using Chatter.Infrastructure.EF;
+using Chatter.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,7 +25,7 @@ namespace Chatter.Infrastructure.Services
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
             if (user != null)
-                throw new Exception($"User with email:{email} already exists.");
+                throw new ServiceException(ErrorCodes.InvalidEmail, $"User with email:{email} already exists.");
 
             user = new User(email, Role.User);
             user.SetPassword(password, _passwordHasher);
