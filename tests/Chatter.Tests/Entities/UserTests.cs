@@ -47,12 +47,12 @@ namespace Chatter.Tests.Entities
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void When_password_is_null_or_whitespace_SetPassword_method_should_throw_DomainException(string lastName)
+        public void When_password_is_null_or_whitespace_SetPassword_method_should_throw_DomainException(string password)
         {
             Assert.Throws<DomainException>(() =>
             {
                 // Act & Assert
-                _user.SetPassword(lastName, _passwordHasher);
+                _user.SetPassword(password, _passwordHasher);
             });
         }
     }
