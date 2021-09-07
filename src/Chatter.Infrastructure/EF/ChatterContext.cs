@@ -1,5 +1,6 @@
 ﻿using Chatter.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Chatter.Infrastructure.EF
 {
@@ -17,7 +18,8 @@ namespace Chatter.Infrastructure.EF
             var userBuilder = modelBuilder.Entity<User>();
             userBuilder.HasKey(u => u.Id);
             userBuilder.Property(u => u.UniqueId)
-                .ValueGeneratedOnAdd();
+                .HasDefaultValueSql("NEWSEQUENTIALID()")
+                .IsRequired();
             userBuilder.ToTable("Profile", schema: "User");
         }
     }

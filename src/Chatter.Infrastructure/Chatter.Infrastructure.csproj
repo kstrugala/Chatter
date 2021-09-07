@@ -19,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Handlers\QueryHandlers\" />
+    <Folder Include="Queries\" />
     <Folder Include="Settings\" />
   </ItemGroup>
 
