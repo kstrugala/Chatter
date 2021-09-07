@@ -30,12 +30,10 @@ namespace Chatter.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Chatter.Api", Version = "v1" });
             });
 
-            if(Configuration["DbProvider"].ToLower() == "sql")
+            services.AddDbContext<ChatterContext>(options =>
             {
-                services.AddDbContext<ChatterContext>(options => {
-                    options.UseSqlServer(Configuration.GetConnectionString("ChatterDb"), m => m.MigrationsAssembly("Chatter.Infrastructure"));
-                });
-            }
+                options.UseSqlServer(Configuration.GetConnectionString("ChatterDb"), m => m.MigrationsAssembly("Chatter.Infrastructure"));
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
