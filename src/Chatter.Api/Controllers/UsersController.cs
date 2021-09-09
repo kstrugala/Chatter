@@ -1,4 +1,4 @@
-﻿using Chatter.Infrastructure.Commands.v1.Users;
+﻿using Chatter.Infrastructure.Commands.V1.Users;
 using Chatter.Infrastructure.CQRS.Dispatchers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

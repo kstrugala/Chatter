@@ -1,6 +1,7 @@
 using Autofac;
 using Chatter.Infrastructure.EF;
 using Chatter.Infrastructure.IoC;
+using Chatter.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -57,10 +58,13 @@ namespace Chatter.Api
 
             app.UseAuthorization();
 
+            app.UseChatterExceptionHandler();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

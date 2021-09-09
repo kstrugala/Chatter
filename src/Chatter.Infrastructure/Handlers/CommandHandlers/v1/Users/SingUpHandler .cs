@@ -1,9 +1,9 @@
-﻿using Chatter.Infrastructure.Commands.v1.Users;
+﻿using Chatter.Infrastructure.Commands.V1.Users;
 using Chatter.Infrastructure.CQRS.Commands;
 using Chatter.Infrastructure.Services;
 using System.Threading.Tasks;
 
-namespace Chatter.Infrastructure.Handlers.CommandHandlers.v1.Users
+namespace Chatter.Infrastructure.Handlers.CommandHandlers.V1.Users
 {
     public class SignInHandler : ICommandHandler<SignUpCommand>
     {

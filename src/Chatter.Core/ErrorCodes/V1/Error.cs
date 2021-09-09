@@ -1,6 +1,6 @@
-﻿namespace Chatter.Core.Exceptions
+﻿namespace Chatter.Core.ErrorCodes.V1
 {
-    public static class ErrorCodes
+    public static class Error
     {
         public static string InvalidEmail => "invalid_email";
         public static string InvalidPassword => "invalid_password";

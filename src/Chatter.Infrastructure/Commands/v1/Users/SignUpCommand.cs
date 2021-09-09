@@ -1,6 +1,6 @@
 ﻿using Chatter.Infrastructure.CQRS.Commands;
 
-namespace Chatter.Infrastructure.Commands.v1.Users
+namespace Chatter.Infrastructure.Commands.V1.Users
 {
     public class SignUpCommand : ICommand
     {
