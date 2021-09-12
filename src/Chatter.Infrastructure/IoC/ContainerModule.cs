@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Chatter.Infrastructure.IoC.Modules;
+using Chatter.Infrastructure.Mapper;
 using Microsoft.Extensions.Configuration;
 
 namespace Chatter.Infrastructure.IoC
@@ -14,6 +15,8 @@ namespace Chatter.Infrastructure.IoC
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterInstance(AutoMapperConfig.Initialize()).SingleInstance();
+
             builder.RegisterModule(new SettingsModule(_configuration));
          
             builder.RegisterModule<CqrsModule>();

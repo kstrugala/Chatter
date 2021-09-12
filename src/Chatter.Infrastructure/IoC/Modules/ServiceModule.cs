@@ -24,7 +24,10 @@ namespace Chatter.Infrastructure.IoC.Modules
             builder.RegisterType<PasswordHasher<User>>()
                         .As<IPasswordHasher<User>>();
 
-        }
 
+            builder.RegisterType<JwtHandler>()
+                     .As<IJwtHandler>()
+                     .SingleInstance();
+        }
     }
 }

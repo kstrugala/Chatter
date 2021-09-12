@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Chatter.Infrastructure.Extensions;
+using Chatter.Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
 
 namespace Chatter.Infrastructure.IoC.Modules
@@ -14,7 +16,8 @@ namespace Chatter.Infrastructure.IoC.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-
+            builder.RegisterInstance(_configuration.GetSettings<JwtSettings>("Jwt"))
+                .SingleInstance();
         }
     }
 }

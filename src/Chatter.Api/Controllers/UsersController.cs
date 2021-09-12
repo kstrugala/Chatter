@@ -1,5 +1,6 @@
 ﻿using Chatter.Infrastructure.Commands.V1.Users;
 using Chatter.Infrastructure.CQRS.Dispatchers;
+using Chatter.Infrastructure.Queries.V1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,15 @@ namespace Chatter.Api.Controllers
         {
             await _dispatcher.SendAsync(command);
             return NoContent();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("sign-in")]
+        public async Task<IActionResult> SignIn([FromBody] SignInQuery query)
+        {
+            var result  = await _dispatcher.QueryAsync(query);
+            return Ok(result);
         }
     }
 }
