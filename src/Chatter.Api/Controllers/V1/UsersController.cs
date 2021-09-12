@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Chatter.Api.Controllers
+namespace Chatter.Api.Controllers.V1
 {
     [ApiController]
+    [Route("api/v{version:apiVersion}")]
+    [ApiVersion("1.0")]
+    [ApiVersion("1.1")]
     public class UsersController : ControllerBase
     {
         private readonly IDispatcher _dispatcher;
@@ -35,7 +38,7 @@ namespace Chatter.Api.Controllers
         [Route("sign-in")]
         public async Task<IActionResult> SignIn([FromBody] SignInQuery query)
         {
-            var result  = await _dispatcher.QueryAsync(query);
+            var result = await _dispatcher.QueryAsync(query);
             return Ok(result);
         }
     }

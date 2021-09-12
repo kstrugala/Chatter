@@ -13,6 +13,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using Microsoft.AspNetCore.Mvc;
+using Chatter.Api.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
+using System.Linq;
 
 namespace Chatter.Api
 {
@@ -30,9 +35,40 @@ namespace Chatter.Api
         {
 
             services.AddControllers();
+
+            services.AddApiVersioning(o =>
+            {
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = ApiVersion.Default;
+                o.ReportApiVersions = true;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Chatter.Api", Version = "v1" });
+                c.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Chatter.Api", Version = "v1.1" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "Chatter.Api", Version = "v2" });
+
+                // Versioning
+                c.OperationFilter<RemoveVersionParameter>();
+                c.DocumentFilter<ReplaceVersionWithValueInPath>();
+
+                c.DocInclusionPredicate((version, desc) =>
+                {
+                    if (!desc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+                    var versions = methodInfo.DeclaringType
+                        .GetCustomAttributes(true)
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    if(version.Contains('.'))
+                        return versions.Any(v => $"v{v}" == version);
+
+                    return versions.Any(v => $"v{v.MajorVersion}" == version);
+                });
+
+
+                // JWT token
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
@@ -96,7 +132,11 @@ namespace Chatter.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Chatter.Api v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Chatter.Api v1");
+                    c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Chatter.Api v1.1");
+                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Chatter.Api v2");
+                    });
             }
 
             app.UseHttpsRedirection();
