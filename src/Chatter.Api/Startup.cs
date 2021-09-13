@@ -64,7 +64,7 @@ namespace Chatter.Api
                     if(version.Contains('.'))
                         return versions.Any(v => $"v{v}" == version);
 
-                    return versions.Any(v => $"v{v.MajorVersion}" == version);
+                    return versions.Any(v => $"v{v.MajorVersion}" == version && v.MinorVersion == 0);
                 });
 
 

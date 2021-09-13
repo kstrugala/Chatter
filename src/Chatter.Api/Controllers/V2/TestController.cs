@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Chatter.Api.Controllers.V1
+namespace Chatter.Api.Controllers.V2
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     public class TestController : ControllerBase
     {
         [Authorize]
