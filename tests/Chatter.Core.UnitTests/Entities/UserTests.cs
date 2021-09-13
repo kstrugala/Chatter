@@ -3,7 +3,7 @@ using Chatter.Core.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Xunit;
 
-namespace Chatter.Tests.Entities
+namespace Chatter.Core.UnitTests.Entities
 {
     public class UserTests
     {
@@ -21,7 +21,7 @@ namespace Chatter.Tests.Entities
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void When_first_name_is_null_or_whitespace_SetFirstName_method_should_throw_DomainException(string firstName)
+        public void SetFirstName_ShouldThrowDomainException_WhenFirstNameIsNullOrWhitespace(string firstName)
         {
             Assert.Throws<DomainException>(() =>
             {
@@ -34,7 +34,7 @@ namespace Chatter.Tests.Entities
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void When_last_name_is_null_or_whitespace_SetLastName_method_should_throw_DomainException(string lastName)
+        public void SetLastName_ShouldThrowDomainException_WhenLastNameIsNullOrWhitespace(string lastName)
         {
             Assert.Throws<DomainException>(() =>
             {
@@ -47,7 +47,7 @@ namespace Chatter.Tests.Entities
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void When_password_is_null_or_whitespace_SetPassword_method_should_throw_DomainException(string password)
+        public void SetPassword_ShouldThrowDomainException_WhenPasswordIsNullOrWhitespace(string password)
         {
             Assert.Throws<DomainException>(() =>
             {
