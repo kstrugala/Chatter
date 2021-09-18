@@ -7,6 +7,7 @@ namespace Chatter.Infrastructure.EF
     public class ChatterContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public ChatterContext(DbContextOptions<ChatterContext> options) : base(options)
         {
@@ -21,6 +22,14 @@ namespace Chatter.Infrastructure.EF
                 .HasDefaultValueSql("NEWSEQUENTIALID()")
                 .IsRequired();
             userBuilder.ToTable("Profile", schema: "User");
+
+            var refreshTokenBuilder = modelBuilder.Entity<RefreshToken>();
+            refreshTokenBuilder.HasKey(r => r.Token);
+            refreshTokenBuilder
+                .HasOne(u => u.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId);
+            refreshTokenBuilder.ToTable("RefreshToken", schema: "User");
         }
     }
 }

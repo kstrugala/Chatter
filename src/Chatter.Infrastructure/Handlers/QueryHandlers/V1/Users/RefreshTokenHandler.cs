@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Chatter.Infrastructure.Handlers.QueryHandlers.V1.Users
 {
-    public class SignInHandler : IQueryHandler<SignInQuery, JsonWebTokenDto>
+    public class RefreshTokenHandler : IQueryHandler<RefreshTokenQuery, JsonWebTokenDto>
     {
         private readonly IUserService _userService;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
 
-        public SignInHandler(IUserService userService, IMapper mapper)
+        public RefreshTokenHandler(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
         }
 
-        public async Task<JsonWebTokenDto> HandleAsync(SignInQuery query)
+        public async Task<JsonWebTokenDto> HandleAsync(RefreshTokenQuery query)
         {
-            var token = await _userService.SignInAsync(query.Email, query.Password);
+            var token = await _userService.RefreshAccessTokenAsync(query.Token, query.RefreshToken);
             return _mapper.Map<JsonWebTokenDto>(token);
         }
     }

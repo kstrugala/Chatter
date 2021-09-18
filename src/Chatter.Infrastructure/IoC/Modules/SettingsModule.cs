@@ -18,6 +18,9 @@ namespace Chatter.Infrastructure.IoC.Modules
         {
             builder.RegisterInstance(_configuration.GetSettings<JwtSettings>("Jwt"))
                 .SingleInstance();
+
+            builder.RegisterInstance(_configuration.GetSettings<RefreshTokenSettings>("RefreshToken"))
+             .SingleInstance();
         }
     }
 }

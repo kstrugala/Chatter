@@ -99,6 +99,19 @@ namespace Chatter.Api
                 options.UseSqlServer(Configuration.GetConnectionString("ChatterDb"), m => m.MigrationsAssembly("Chatter.Infrastructure"));
             });
 
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Secret"])),
+                ValidIssuer = Configuration["Jwt:Issuer"],
+                ValidateIssuerSigningKey = true,
+                ValidateAudience = false,
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddSingleton(tokenValidationParameters);
+
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -107,16 +120,7 @@ namespace Chatter.Api
             }).AddJwtBearer(cfg =>
             {
                 cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Secret"])),
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidateIssuerSigningKey = true,
-                    ValidateAudience = false,
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                };
+                cfg.TokenValidationParameters = tokenValidationParameters;
             });
         }
 

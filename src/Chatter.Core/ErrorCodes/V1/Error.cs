@@ -9,5 +9,6 @@
         public static string InvalidFirstName => "invalid_firstname";
         public static string InvalidLastName => "invalid_lastname";
         public static string InvalidCredentials => "invalid_credentials";
+        public static string InvalidToken => "invalid_token";
     }
 }

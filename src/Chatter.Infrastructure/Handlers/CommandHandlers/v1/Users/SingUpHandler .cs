@@ -15,7 +15,7 @@ namespace Chatter.Infrastructure.Handlers.CommandHandlers.V1.Users
         }
 
         public async Task HandleAsync(SignUpCommand command)
-            => await _userService.SignUp(command.Email,
+            => await _userService.SignUpAsync(command.Email,
                                          command.Password,
                                          command.FirstName,
                                          command.LastName);

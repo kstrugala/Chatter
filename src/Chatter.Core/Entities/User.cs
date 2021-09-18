@@ -22,7 +22,7 @@ namespace Chatter.Core.Entities
         public string Role { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
-        protected User()
+          protected User()
         {
 
         }

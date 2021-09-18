@@ -41,5 +41,19 @@ namespace Chatter.Api.Controllers.V1
             var result = await _dispatcher.QueryAsync(query);
             return Ok(result);
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("token/refresh")]
+        public async Task<IActionResult> RefreshAccessToken([FromBody] RefreshTokenQuery query)
+            => Ok(await _dispatcher.QueryAsync(query));
+
+        [HttpPost]
+        [Route("token/revoke")]
+        public async Task<IActionResult> RevokeRefreshToken([FromBody] RevokeRefreshTokenCommand command)
+        {
+            await _dispatcher.SendAsync(command);
+            return NoContent();
+        }
     }
 }
