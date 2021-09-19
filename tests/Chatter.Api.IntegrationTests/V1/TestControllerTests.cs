@@ -10,7 +10,7 @@ namespace Chatter.Api.IntegrationTests.V1
     public class TestControllerTests : IntegrationTest
     {
         [Fact]
-        public async Task Test_WhenUserExist_ShouldReturnTokensAndProperJwtTokenExpirationDate()
+        public async Task Test_WhenUserIsAuthenticated_ShouldReturnAuthorizeString()
         {
             // Arrange
             await AuthenticateAsync();
