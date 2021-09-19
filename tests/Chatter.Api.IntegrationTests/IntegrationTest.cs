@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,10 +15,10 @@ using System.Threading.Tasks;
 
 namespace Chatter.Api.IntegrationTests
 {
-    public class IntegrationTest
+    public class IntegrationTest : IDisposable
     {
         protected readonly HttpClient TestClient;
-
+        private readonly IServiceProvider _serviceProvider;
         public IntegrationTest()
         {
             var appFactory = new WebApplicationFactory<Startup>()
@@ -25,6 +26,8 @@ namespace Chatter.Api.IntegrationTests
                 {
                     builder.ConfigureServices(services =>
                     {
+                        // Use In Memory Database for testing (instead of SQL Server database)
+
                         var descriptor = services.SingleOrDefault(
                             d => d.ServiceType ==
                                 typeof(DbContextOptions<ChatterContext>));
@@ -40,7 +43,7 @@ namespace Chatter.Api.IntegrationTests
                         });
                     });
                 });
-
+            _serviceProvider = appFactory.Services;
             TestClient = appFactory.CreateClient();
         }
 
@@ -80,6 +83,11 @@ namespace Chatter.Api.IntegrationTests
             return tokens.Token;
         }
 
-
+        public void Dispose()
+        {
+            using var serviceScope = _serviceProvider.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<ChatterContext>();
+            context.Database.EnsureDeleted();
+        }
     }
 }
