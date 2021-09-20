@@ -31,9 +31,9 @@ namespace Chatter.Infrastructure.Services
 
         public async Task SignUpAsync(string email, string password, string firstName, string lastName)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
+            var user = await GetUserAsync(email);
 
-            if (user != null)
+            if (user is not null)
                 throw new ServiceException(Error.InvalidEmail, $"User with email:{email} already exists.");
 
             user = new User(email, Role.User);
@@ -49,7 +49,7 @@ namespace Chatter.Infrastructure.Services
         {
             var user = await GetUserAsync(email);
 
-            if (user == null)
+            if (user is null)
                 throw new ServiceException(Error.InvalidCredentials, "Invalid credentials");
 
             if (!user.ValidatePassword(password, _passwordHasher))
@@ -64,7 +64,7 @@ namespace Chatter.Infrastructure.Services
 
             var user = await GetUserAsync(email);
 
-            if (user == null)
+            if (user is null)
                 throw exception;
 
             if (!user.ValidatePassword(oldPassword, _passwordHasher))
