@@ -58,6 +58,24 @@ namespace Chatter.Infrastructure.Services
             return await GenerateToken(user);
         }
 
+        public async Task ChangePasswordAsync(string email, string oldPassword, string newPassword)
+        {
+            var exception =  new ServiceException(Error.InvalidCredentials, "Invalid credentials");
+
+            var user = await GetUserAsync(email);
+
+            if (user == null)
+                throw exception;
+
+            if (!user.ValidatePassword(oldPassword, _passwordHasher))
+                throw exception;
+
+            user.SetPassword(newPassword, _passwordHasher);
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<JsonWebToken> RefreshAccessTokenAsync(string token, string refreshToken)
         {
             var exception = new ServiceException(Error.InvalidToken, "Invalid token or refresh token");
@@ -130,6 +148,6 @@ namespace Chatter.Infrastructure.Services
             await _context.SaveChangesAsync();
 
             return result;
-        }
+        }      
     }
 }

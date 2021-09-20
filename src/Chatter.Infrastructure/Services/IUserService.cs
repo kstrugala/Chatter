@@ -7,6 +7,8 @@ namespace Chatter.Infrastructure.Services
     {
         Task SignUpAsync(string email, string password, string firstName, string lastName);
         Task<JsonWebToken> SignInAsync(string email, string password);
+        Task ChangePasswordAsync(string email, string oldPassword, string newPassword);
+
 
         Task<JsonWebToken> RefreshAccessTokenAsync(string token, string refreshToken);
         Task RevokeRefreshTokenAsync(string token);
