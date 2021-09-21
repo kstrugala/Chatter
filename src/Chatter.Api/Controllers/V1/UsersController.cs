@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Chatter.Api.Controllers.V1
 {
+    [Authorize]
     [ApiController]
     [Route("api/v{version:apiVersion}")]
     [ApiVersion("1.0")]
@@ -52,6 +54,15 @@ namespace Chatter.Api.Controllers.V1
         [Route("token/revoke")]
         public async Task<IActionResult> RevokeRefreshToken([FromBody] RevokeRefreshTokenCommand command)
         {
+            await _dispatcher.SendAsync(command);
+            return NoContent();
+        }
+
+        [HttpPost]
+        [Route("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
+        {
+            command.Email = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             await _dispatcher.SendAsync(command);
             return NoContent();
         }
