@@ -22,7 +22,7 @@ namespace Chatter.Core.Entities
         public string PasswordHash { get; private set; }
         public string Role { get; private set; }
 
-        public List<Post> Posts { get; set; }
+        public List<Post> Posts { get; private set; }
 
         public DateTime CreatedAt { get; private set; }
 
