@@ -8,6 +8,8 @@ namespace Chatter.Infrastructure.EF
     {
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        
+        public DbSet<Post> Posts { get; set; }
 
         public ChatterContext(DbContextOptions<ChatterContext> options) : base(options)
         {
@@ -26,10 +28,24 @@ namespace Chatter.Infrastructure.EF
             var refreshTokenBuilder = modelBuilder.Entity<RefreshToken>();
             refreshTokenBuilder.HasKey(r => r.Token);
             refreshTokenBuilder
-                .HasOne(u => u.User)
+                .HasOne(r => r.User)
                 .WithMany()
                 .HasForeignKey(r => r.UserId);
             refreshTokenBuilder.ToTable("RefreshToken", schema: "User");
+
+            var postBuilder = modelBuilder.Entity<Post>();
+            postBuilder.HasKey(p => p.Id);
+            postBuilder.Property(u => u.UniqueId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()")
+                .IsRequired();
+            postBuilder
+                .HasOne(p => p.Author)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.AuthorId);
+             
+            postBuilder.ToTable("Post", schema: "User");
+
+
         }
     }
 }

@@ -10,5 +10,7 @@
         public static string InvalidLastName => "invalid_lastname";
         public static string InvalidCredentials => "invalid_credentials";
         public static string InvalidToken => "invalid_token";
+
+        public static string IncorrectPostTitle => "incorect_post_title";
     }
 }

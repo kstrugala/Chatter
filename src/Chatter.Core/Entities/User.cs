@@ -2,6 +2,7 @@
 using Chatter.Core.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Chatter.Core.Entities
@@ -20,9 +21,12 @@ namespace Chatter.Core.Entities
         public string Email { get; private set; }
         public string PasswordHash { get; private set; }
         public string Role { get; private set; }
+
+        public List<Post> Posts { get; set; }
+
         public DateTime CreatedAt { get; private set; }
 
-          protected User()
+        protected User()
         {
 
         }
