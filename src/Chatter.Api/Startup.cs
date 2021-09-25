@@ -122,6 +122,8 @@ namespace Chatter.Api
                 cfg.SaveToken = true;
                 cfg.TokenValidationParameters = tokenValidationParameters;
             });
+
+            services.AddHttpContextAccessor();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

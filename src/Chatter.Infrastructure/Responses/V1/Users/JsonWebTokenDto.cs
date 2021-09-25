@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chatter.Infrastructure.Responses.V1
+namespace Chatter.Infrastructure.Responses.V1.Users
 {
     public class JsonWebTokenDto
     {

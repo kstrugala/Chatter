@@ -1,7 +1,8 @@
 ﻿using Chatter.Infrastructure.Commands.V1.Users;
 using Chatter.Infrastructure.EF;
 using Chatter.Infrastructure.Queries.V1;
-using Chatter.Infrastructure.Responses.V1;
+using Chatter.Infrastructure.Queries.V1.Users;
+using Chatter.Infrastructure.Responses.V1.Users;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

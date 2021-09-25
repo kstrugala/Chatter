@@ -1,6 +1,7 @@
 ﻿using Chatter.Infrastructure.Commands.V1.Users;
 using Chatter.Infrastructure.Queries.V1;
-using Chatter.Infrastructure.Responses.V1;
+using Chatter.Infrastructure.Queries.V1.Users;
+using Chatter.Infrastructure.Responses.V1.Users;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using System;

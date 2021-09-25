@@ -1,7 +1,9 @@
 ﻿using Chatter.Infrastructure.Commands.V1.Posts;
 using Chatter.Infrastructure.CQRS.Dispatchers;
+using Chatter.Infrastructure.Queries.V1.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,6 +23,21 @@ namespace Chatter.Api.Controllers.V1
         {
             _dispatcher = dispatcher;
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetPost(Guid id)
+        {
+            var query = new GetPostQuery { Id = id };
+            var post = await _dispatcher.QueryAsync(query);
+
+            if (post is null)
+                return NotFound();
+
+            return Ok(post);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> AddPost([FromBody] AddPostCommand command)

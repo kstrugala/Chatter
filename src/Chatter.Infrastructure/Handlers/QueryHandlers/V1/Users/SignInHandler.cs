@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Chatter.Infrastructure.CQRS.Queries;
-using Chatter.Infrastructure.Queries.V1;
-using Chatter.Infrastructure.Responses.V1;
+using Chatter.Infrastructure.Queries.V1.Users;
+using Chatter.Infrastructure.Responses.V1.Users;
 using Chatter.Infrastructure.Services;
 using System.Threading.Tasks;
 

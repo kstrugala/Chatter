@@ -1,7 +1,11 @@
-﻿using Chatter.Core.Entities;
+﻿using AutoMapper;
+using Chatter.Core.Entities;
 using Chatter.Core.ErrorCodes.V1;
 using Chatter.Infrastructure.EF;
 using Chatter.Infrastructure.Exceptions;
+using Chatter.Infrastructure.Responses.V1.Posts;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,10 +14,19 @@ namespace Chatter.Infrastructure.Services
     public class PostService : IPostService
     {
         private readonly ChatterContext _context;
+        private readonly IMapper _mapper;
 
-        public PostService(ChatterContext context)
+        public PostService(ChatterContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<PostDto> GetPostAsync(Guid id)
+        {
+            var post = await _context.Posts.SingleOrDefaultAsync(p => p.UniqueId == id);
+
+            return  _mapper.Map<PostDto>(post);
         }
 
         public async Task AddPostAsync(string authorsEmail, string title, string content)
