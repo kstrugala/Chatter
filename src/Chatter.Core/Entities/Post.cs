@@ -33,7 +33,7 @@ namespace Chatter.Core.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        private void SetTitle(string title)
+        public void SetTitle(string title)
         {
 
             if (string.IsNullOrEmpty(title))
@@ -44,7 +44,7 @@ namespace Chatter.Core.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        private void SetContent(string content)
+        public void SetContent(string content)
         {
             Content = content;
 

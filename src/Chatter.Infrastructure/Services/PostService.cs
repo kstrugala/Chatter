@@ -41,6 +41,20 @@ namespace Chatter.Infrastructure.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdatePostAsync(Guid id, string title, string content)
+        {
+            var post = await _context.Posts.SingleOrDefaultAsync(p => p.UniqueId == id);
+
+            if (post is null)
+                throw new ServiceException(Error.IncorrectPostId, $"Post with id: {id} doesn't exist");
+
+            post.SetTitle(title);
+            post.SetContent(content);
+
+            _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task RemovePostAsync(Guid id)
         {
             var post = await _context.Posts.SingleOrDefaultAsync(p => p.UniqueId == id);

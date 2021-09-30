@@ -47,6 +47,14 @@ namespace Chatter.Api.Controllers.V1
             return NoContent();
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdatePost(Guid id, [FromBody] UpdatePostCommand command)
+        {
+            command.Id = id;
+            await _dispatcher.SendAsync(command);
+            return NoContent();
+        }
 
         [HttpDelete]
         [Route("{id}")]
