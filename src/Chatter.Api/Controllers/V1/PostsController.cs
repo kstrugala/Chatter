@@ -46,5 +46,15 @@ namespace Chatter.Api.Controllers.V1
             await _dispatcher.SendAsync(command);
             return NoContent();
         }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> RemovePost(Guid id)
+        {
+            var command = new RemovePostCommand { Id = id };
+            await _dispatcher.SendAsync(command);
+            return NoContent();
+        }
     }
 }

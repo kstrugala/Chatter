@@ -12,5 +12,6 @@
         public static string InvalidToken => "invalid_token";
 
         public static string IncorrectPostTitle => "incorect_post_title";
+        public static string IncorrectPostId => "incorect_post_id";
     }
 }

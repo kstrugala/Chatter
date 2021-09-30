@@ -8,5 +8,7 @@ namespace Chatter.Infrastructure.Services
     {
         Task<PostDto> GetPostAsync(Guid id);
         Task AddPostAsync(string authorsEmail, string title, string content);
+
+        Task RemovePostAsync(Guid id);
     }
 }
